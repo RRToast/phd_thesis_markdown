@@ -41,7 +41,7 @@ pdf:
 	-V lang:de-DE \
 	-V mainlang:german \
 	-N \
-	--pdf-engine=xelatex 
+	--pdf-engine=xelatex
 
 tex:
 	pandoc "$(INPUTDIR)"/*.md \
