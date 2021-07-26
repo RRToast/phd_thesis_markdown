@@ -1,7 +1,25 @@
 # Zusammenfassung {.unnumbered}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et turpis gravida, lacinia ante sit amet, sollicitudin erat. Aliquam efficitur vehicula leo sed condimentum. Phasellus lobortis eros vitae rutrum egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec at urna imperdiet, vulputate orci eu, sollicitudin leo. Donec nec dui sagittis, malesuada erat eget, vulputate tellus. Nam ullamcorper efficitur iaculis. Mauris eu vehicula nibh. In lectus turpis, tempor at felis a, egestas fermentum massa.
+(Worum geht es?)
+Sicherheit ist ein Thema das zunehmend an Wichtigkeit gewinnt, vor allem im Internet wird kommunikation zunehnemend verschlüsselt. Nachrichten die heutzutage unverschlüsselt verschickt werden sind nichtmehr die Regel sondern stellen eine Ausnahme dar. Daher ist es wichtig zu verstehen wie Sicherheit gewährleistet werden kann, auch wenn Geräte sich nichtmehr in eigener Hand befinden.
 
+Zielstellung dieser Arbeit ist verwalten von Zertifikaten, welche benutzt werden können um jene Sicherheit zu gewährleisten. Dabei soll besonderenDie sichere Erstellung, Aktualisierung und Speicherung von Zertifikaten.
+Problemstellung:
+Forschungsfrage:
+
+(Wie bin ich vorgegangen?)
+Methoden:
+
+(Was sind meine wichtigsten Ergebnisse?)
+Ergebnisse/Fazit:
+
+
+(Was bedeuten meine Ergebnisse?)
+Diskussionsgrundlage/Empfehlung:
+
+
+
+Das ACME Protokol wird verwendet um es Servern zu ermöglichen
 
 \begin{table}[h]
 \centering
@@ -11,8 +29,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et turpis gravida, 
   \hline
   k & l & t & Informationsverlust \\
   \hline
-  2 & - & - & -64,288 \% \\     
-  3 & - & - & -69,002 \% \\   
+  2 & - & - & -64,288 \% \\
+  3 & - & - & -69,002 \% \\
   4 & - & - & -69,008 \% \\
   4 & 3 & - & -69,233 \% \\
   4 & 5 & - & -69,652 \% \\

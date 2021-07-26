@@ -1,30 +1,55 @@
-# Untersuchung mit Tabelle
+# Untersuchung von Angriffsvektoren
 
-## Einleitung
+In diesem Kapietel sollen die Möglichen Angriffsvektoren besprochen werden die bei dem DNS sowie dem IP verfahren bestanden, sowie neue die durch die neue Methode erst hinzugekommen sind. Dabei wird unterteilt in Vektoren die in allen Verfahren relevant sind, jene die speziell auf das neue Verfahren zugeschnitten sind und abschließend sollen mögiche Einfallstore besprochen werden.
 
-Das ist die Einleitung. Sed vulputate tortor at nisl blandit interdum. Cras sagittis massa ex, quis eleifend purus condimentum congue. Maecenas tristique, justo vitae efficitur mollis, mi nulla varius elit, in consequat ligula nulla ut augue. Phasellus diam sapien, placerat sit amet tempor non, lobortis tempus ante.
+## Was sind Angriffsvektoren
 
-## Methode
+Einfallstore.
 
-Donec imperdiet, lectus vestibulum sagittis tempus, turpis dolor euismod justo, vel tempus neque libero sit amet tortor. Nam cursus commodo tincidunt.
+## Altbekannte Angriffsvektoren
 
-### Unterabschnitt 1
+1. Replay Angriffe (Replay noncen)
+2. JWS (Man in the Middle Angriffe, da Signatur den Content schützt. Änderungen ohne die Singatur ungültig zu machen sind nicht möglich)
+3. dos (Server abhänging. Nicht sicher ob Teil meiner BA)
+4. Sozial Hacking (fällt flach da Automatisiert)
 
-Das ist der erste Teil der Methodik. Duis tempor sapien sed tellus ultrices blandit. Sed porta mauris tortor, eu vulputate arcu dapibus ac. Curabitur sodales at felis efficitur sollicitudin. Quisque at neque sollicitudin, mollis arcu vitae, faucibus tellus.
+### Neuartige Angriffsvektoren
 
-### Unterabschnitt 2
+1. Impersonation Angriff
+  Vor dem ersten Schritt: Er kann erfolgreich einen Account anlegen und eine Order senden, allerdings wird hier der Value überprüft und die Order verweigert
+  Nach den ersten zwei Schritten: Die Account sowie die Order URL sind unbekannt. Anfragen können nicht geschickt werden.
+  (Falls doch bekannt kann die Challenge nicht erfüllt werden, da den Private Key nur der Klient kennt)
+  Nach dem Vallidieren: MÖGLICH? URL wird benötigt, sowie JWS Values, keine weitere Sicherheit
 
-Das ist der zweite Teil der Methodik. Sed ut ipsum ultrices, interdum ipsum vel, lobortis diam. Curabitur sit amet massa quis tortor molestie dapibus a at libero. Mauris mollis magna quis ante vulputate consequat. Integer leo turpis, suscipit ac venenatis pellentesque, efficitur non sem. Pellentesque eget vulputate turpis. Etiam id nibh at elit fermentum interdum.
+2. MitM
+  Kommunikation verschlüsselt, JWS, Private Keys nur auf Client/Server. Allerdings, was ist wenn der Client als zwischen speicher funktioniert. Wenn er den JWS Wert lesen kann, ist er in der Lage die Kommunikation mit zu verfolgen -> Nutzen unklar
+
+3. Continues Validation durch Zertifikate Chaining
+  ?
+
+4. Server Impersonation
+  Möglich die gesammte Kommunikation zu faken -> Gerät wird nutzlos
+
+5. Physischen Schaden bsp: TPM Chip entfernen, oder zerstört
+
+6. Abschießen des Daemon (Zertifikate können nicht mehr ausgestellt werden)
+
+7. Server DB kaputt machen (Daten verlust) / Datenbank mit falschen Daten füttern
+
+8. Was passiert wenn ein Angreifer einen Stick einfügt und über diesen Bootet? / Was passiert wenn der TPM Chip abgebaut wird und wo anders eingesetzt wird?
+
+
+
+
 
 <!--
 Kommentare können so hinzugefügt werden.
--->
 
 ## Ergebnisse
 
 Die Tabelle \ref{tabellenreferenz} zeigt uns wie man eine Tabelle hinzufügt. Integer tincidunt sed nisl eget pellentesque. Mauris eleifend, nisl non lobortis fringilla, sapien eros aliquet orci, vitae pretium massa neque eu turpis. Pellentesque tincidunt aliquet volutpat. Ut ornare dui id ex sodales laoreet.
 
-<!-- Erzwingt eine neue Seite -->
+<!-- Erzwingt eine neue Seite
 
 \newpage
 
@@ -35,7 +60,7 @@ Zeile 1               0.1                     0.2
 
 Zeile 2               0.3                     0.3
 
-Zeile 3               0.4                     0.4      
+Zeile 3               0.4                     0.4
 
 Zeile 4               0.5                     0.6
 
@@ -51,3 +76,4 @@ Das ist die Auseinandersetzung mit den Ergebnissen. Etiam sit amet mi eros. Done
 ## Schlussfolgerung
 
 Das ist die Schlussfolgerung des Kapitels. Nullam porta tortor id vehicula interdum. Quisque pharetra, neque ut accumsan suscipit, orci orci commodo tortor, ac finibus est turpis eget justo. Cras sodales nibh nec mauris laoreet iaculis. Morbi volutpat orci felis, id condimentum nulla suscipit eu. Fusce in turpis quis ligula tempus scelerisque eget quis odio. Vestibulum et dolor id erat lobortis ullamcorper quis at sem.
+-->

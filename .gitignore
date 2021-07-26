@@ -60,7 +60,7 @@ target/
 node_modules/
 
 # output directory
-output/
+# output/
 
 
 # Created by https://www.gitignore.io/api/intellij+iml

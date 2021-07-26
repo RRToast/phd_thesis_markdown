@@ -3,16 +3,16 @@
   Workaround bzw. Rückgriff auf LaTex-Befehle, um zentrale Werte immer wieder verwenden zu können.
 -->
 % Abschlussarbeit
-\newcommand{\titel}{Titel der Abschlussarbeit}
+\newcommand{\titel}{Authentifizierung von Systemen: Beschreibung eines Verfahrens zur sicheren Generierung, Verwahrung und Aktualisierung von Zertifikaten}
 \newcommand{\datum}{01.03.2018}
 
 % Autor_in
-\newcommand{\aVorname}{Max}
-\newcommand{\aNachname}{Mustermann}
-\newcommand{\aGeburtsdatum}{01.04.1998}
+\newcommand{\aVorname}{Richard}
+\newcommand{\aNachname}{Reik}
+\newcommand{\aGeburtsdatum}{27.08.1998}
 \newcommand{\aInstitution}{Hochschule München}
-\newcommand{\aStudiengruppe}{IF7}
-\newcommand{\aSemester}{WS 17/2018}
+\newcommand{\aStudiengruppe}{IF8}
+\newcommand{\aSemester}{SS 2021}
 
 \newcommand{\aName}{\aVorname\space \aNachname}
 
