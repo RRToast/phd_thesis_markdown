@@ -1,16 +1,30 @@
 # Abkürzungsverzeichnis {.unnumbered}
 
-## Nicht ausgerichtet {.unnumbered}
-
 API: **A**pplication **P**rogramming **I**nterface
 
 JSON: **J**ava**S**cript **O**bject **N**otation
 
-## Ausgerichtet {.unnumbered}
+JOSE:
+
+JWS:
+
+JWT:
+
+ACME:
+
+PI:
+
+JWK:
+
+TPM:
+
+Nonce:
+
+
 
 \begin{tabbing}
-\textbf{API}~~~~~~~~~~~~ \= \textbf{A}pplication \textbf{P}rogramming \textbf{I}nterface \\  
-\textbf{JSON} \> \textbf{J}ava\textbf{S}cript \textbf{O}bject \textbf{N}otation \\  
+\textbf{API}~~~~~~~~~~~~ \= \textbf{A}pplication \textbf{P}rogramming \textbf{I}nterface \\
+\textbf{JSON} \> \textbf{J}ava\textbf{S}cript \textbf{O}bject \textbf{N}otation \\
 \end{tabbing}
 
 \newpage

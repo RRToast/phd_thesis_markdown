@@ -1,45 +1,10 @@
-# Untersuchung von Angriffsvektoren
+# Fazit
 
 In diesem Kapietel sollen die Möglichen Angriffsvektoren besprochen werden die bei dem DNS sowie dem IP verfahren bestanden, sowie neue die durch die neue Methode erst hinzugekommen sind. Dabei wird unterteilt in Vektoren die in allen Verfahren relevant sind, jene die speziell auf das neue Verfahren zugeschnitten sind und abschließend sollen mögiche Einfallstore besprochen werden.
 
-## Was sind Angriffsvektoren
+## Zusammenfassung
 
-Einfallstore.
-
-## Altbekannte Angriffsvektoren
-
-1. Replay Angriffe (Replay noncen)
-2. JWS (Man in the Middle Angriffe, da Signatur den Content schützt. Änderungen ohne die Singatur ungültig zu machen sind nicht möglich)
-3. dos (Server abhänging. Nicht sicher ob Teil meiner BA)
-4. Sozial Hacking (fällt flach da Automatisiert)
-
-### Neuartige Angriffsvektoren
-
-1. Impersonation Angriff
-  Vor dem ersten Schritt: Er kann erfolgreich einen Account anlegen und eine Order senden, allerdings wird hier der Value überprüft und die Order verweigert
-  Nach den ersten zwei Schritten: Die Account sowie die Order URL sind unbekannt. Anfragen können nicht geschickt werden.
-  (Falls doch bekannt kann die Challenge nicht erfüllt werden, da den Private Key nur der Klient kennt)
-  Nach dem Vallidieren: MÖGLICH? URL wird benötigt, sowie JWS Values, keine weitere Sicherheit
-
-2. MitM
-  Kommunikation verschlüsselt, JWS, Private Keys nur auf Client/Server. Allerdings, was ist wenn der Client als zwischen speicher funktioniert. Wenn er den JWS Wert lesen kann, ist er in der Lage die Kommunikation mit zu verfolgen -> Nutzen unklar
-
-3. Continues Validation durch Zertifikate Chaining
-  ?
-
-4. Server Impersonation
-  Möglich die gesammte Kommunikation zu faken -> Gerät wird nutzlos
-
-5. Physischen Schaden bsp: TPM Chip entfernen, oder zerstört
-
-6. Abschießen des Daemon (Zertifikate können nicht mehr ausgestellt werden)
-
-7. Server DB kaputt machen (Daten verlust) / Datenbank mit falschen Daten füttern
-
-8. Was passiert wenn ein Angreifer einen Stick einfügt und über diesen Bootet? / Was passiert wenn der TPM Chip abgebaut wird und wo anders eingesetzt wird?
-
-
-
+## Future Work
 
 
 <!--
