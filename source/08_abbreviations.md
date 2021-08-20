@@ -20,6 +20,12 @@ TPM:
 
 Nonce:
 
+SHA-256:
+
+base64: (abkürzung?)
+
+TXT:
+
 
 
 \begin{tabbing}
