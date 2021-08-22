@@ -1,8 +1,31 @@
 # Evaluation
 
 ## Testlauf der ACME Erweiterung
+Um die ACME Erweiterung zu testen habe ich auf meinem Rechner den ACME Server und auf einem Raspberrypi mit TPM Chip den Client laufen lassen. Ziel des Ablaufes ist es erst einen Account zu erstellen, dann eine Order mit neuem Identifier abzusenden, die neue Challenge zu verwenden und am Ende ein Zertifikat zu erhalten.
 
-## Vergleich mit DNS und HTTP Challenges
+![Get Request des Clients \label{mein_label}](source/figures/ACMEclientAblauf.png)
+*ACME Ablauf auf Pi*
+
+Der Output beschreibt den Ablauf des ACME Protokolls, erweitert um die "ek" Challenge. Am ende dieser Kommunikation befindet sich im TPM Chip das Zertifikat, für einen Nutzer des Client gerätes zugänglich gespeichert, sowie dessen privater Schlüssel, für den Nutzer unzugänglich gespeichert.
+
+<!-- TODO: Was soll ich hier groß beschreiben?   Möglichkeiten: Zeit zum erstellen des Certifiates, Benutzerfreundlichkeit, Erweiterbarkeit, ... -->
+
+## Vergleich der EK mit der DNS und HTTP Challenge
+Vorteile und Nachteile von DNS, HTTP und EK.
+
+HTTP und DNS Challenge:
+In beiden Challenges stellt der Server einen Token zur Verfügung, der die jeweilige Challenges genau definiert. Dabei wandelt der Client diesen Token, zusammen mit seinem Account Key. Bei der DNS Challenge wird zusätzlich noch mit dem SHA-256 Verfahren der Hashwert gebildet. Anschließend werden beide Werte base64 codiert als HTTP Resource beziehungsweise als DNS eintrag zur Verfügung gestellt. Der Client sendet nun einen Request an den Server um diesen Wissen zu lassen, dass die Resource nun für ihn zur Verfügung steht. Der Server frägt diese Information nun ab, stimmt der Account Key mit dem vom Server generierten Wert über ein wurde die Challenge erfolgreich erfüllt.
+
+EK Challenge:
+Für die EK Challenge muss zuerst der EK Wert aus dem TPM Chip gelesen und ein AK Wert mithilfe des Chips generiert werden. Diese Werte bilden zusammen mit dem "ek" Typ den Identifier dieser Challenge und werden so dem Server übergeben. Dieser generiert nun aus diesen beiden Werten ein Geheimniss, welches der Client anfragen und lösen muss. Ist das geschafft übersendet der Client das gelöste Geheimniss base64 codiert, zurück an den Server.
+
+Gemeinsamkeiten:
+Auffällig ist, dass alle drei Challenge Arten Kontrolle über etwas beweisen. In jedem muss beweisen werden, dass der der Client die Kontrolle über den Wert im Identifier, egal ob EK, DNS oder Website nicht, besitzt.
+
+Unterschiede:
+Einer der größten Unterschiede zwischen den alten Challenges und der neuen ist die Art der Überprüfung. Wo bei der DNS und HTTP CHallenge der Server selbst aktiv werden muss um den Account Key abzufragen, so nimmt er in der EK Challenge eine rein passive Rolle ein. Der Server muss seinerseits keinerlei Anfragen erstellen was zu komplikationen führen könnte, wenn beispielsweise mehrere Websiten mit gleichem Namen existieren oder der DNS Anbiter keine API zur Verfügung stellt [@challenge-types].
+Ein weiteren Unterschied stellt die Art der Schlüssel generierung und Verwendung dar. Dadurch, dass der AK Wert zusammen mit dem EK Wert validiert wird, kann sichergestellt werden, dass beide Werte aus dem gleichen TPM Chip stammen. Auch wenn eine neue Order aufgegeben wird, muss der Client diese Prüfung erneut antreten um wiederholt zu bestätigen, dass EK und AK Wert aus dem gleichen Chip stammen.
+
 
 ## Angriffsvektoren
 <!--
