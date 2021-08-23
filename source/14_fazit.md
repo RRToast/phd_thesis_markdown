@@ -5,22 +5,23 @@
 In dieser Arbeit wurde die Frage behandelt, wie eine sichere Verteilung von X.509-Zertifikaten auf Linux-basierten Endbenutzersystemen aussehen kann. Dabei wurde bei dieser Arbeit nicht nur ein Schwehrpunkt auf die Verteilung von X.509-Zertifikaten sondern auch auf deren Speicherung und Verwendung gelegt. Mit dieser Arbeit soll es möglich gemacht werden die Funktionalität welche für Windows Systeme bereits zur Verfügung steht auch Linux-basierte Systemen zu ermöglichen.
 Dabei wurde sich dafür entschieden auf bereits existierende Projekte aufzubauen. Für das erstellen und verwalten von Zertifikaten sollte auf ACME zurückgegriffen werden und für die Prüfung von Endgeräten auf go-attestation von Google. Durch die Verbindung dieser Projekte und unter der Verwendung eines Chips, der eine eindeutige Identifikation erlaubt, war es möglich für einen Pi auf dem ein Linux System lief zu erstellen.
 Um dieses Ziel, der Forschungsfrage entsprechend umzusetzen sind zwei Akteure von nöten. Der erste stellt das Linux-basierte Endbenutzersystem dar, welches ein X.509 Zertifikat erhält, das andere ist die Instanz, welche ein solches Zertifikat zur Verfügung stellt. Sowohl ACME als auch go-attestation arbeiten dabei nach einem gleichen Client Server Model und so war es möglich diese Projekte Sinvoll mit einander zu verknüpfen um diese Bachelorarbeit zu verfassen. Der erste Schritt bestand dabei darin, die ACME Kommunikation zu analysieren und um eine neue Challenge zu erweitern. Diese Challenge stellt einen sicherungsmechanismus für die Verteilung der Zertifikate da. Denn dadurch ist es Serverseitig möglich das Endbenutzersystem eindeutig zu identifizieren.
+Ein ähnliches Verfahren wie dass unter der Verwendung des TPM Chips wurde für ACME bereits entwickelt. Dabei handelt es sich um zwei alternative Verfahren welche IP Adressen oder Telefonnummern für die Identifikation des Endbenutzersystems verwenden. Auch wenn beide in der Lage sind, genau wie das in dieser Arbeit beschriebene Verfahren, Zertifikate auszugstellen sowie das Endbenutzersystem zu identifizieren, gab es gute Gründe das neue Verfahren zu implementieren. Einmal dient die Verwendung von Telefonnummern zur Prüfung weniger der Prüfung des Endbenutzersystems und mehr der des Nutzers des Systems. Zweitens sind IP Adressen einem ständigen Wechsel ausgesetzt, was es schwierig macht ....... <!-- warum schwierig? -->
+<!-- Regeln: Auführliche Schlussfolgerungen und Refelxion, zusammenfassung der zentralen Erkenntnisse, keine neuen Informationen, evtl Verweis auf offene Fragen/ evaluierung der Vorgehensweise, Präsens verweise auf meine Forschung im 1ter Vergangenheit
+
 
 Zeck der Forschungsfrage
 
 Umsetzung
 
-Ergebnisse
-
-Ein ähnliches Verfahren wie dass unter der Verwendung des TPM Chips wurde für ACME bereits entwickelt. Dabei handelt es sich um zwei alternative Verfahren welche IP Adressen oder Telefonnummern für die Identifikation des Endbenutzersystems verwenden. Auch wenn beide in der Lage sind, genau wie das in dieser Arbeit beschriebene Verfahren, Zertifikate auszugstellen sowie das Endbenutzersystem zu identifizieren, gab es gute Gründe das neue Verfahren zu implementieren. Einmal dient die Verwendung von Telefonnummern zur Prüfung weniger der Prüfung des Endbenutzersystems und mehr der des Nutzers des Systems. Zweitens sind IP Adressen einem ständigen Wechsel ausgesetzt, was es schwierig macht ....... <!-- warum schwierig? --> 
-
-
-<!-- Regeln: Auführliche Schlussfolgerungen und Refelxion, zusammenfassung der zentralen Erkenntnisse, keine neuen Informationen, evtl Verweis auf offene Fragen/ evaluierung der Vorgehensweise, Präsens verweise auf meine Forschung im 1ter Vergangenheit -->
+Ergebnisse-->
 
 ## Future Work
 
-Auf diesem Projekt aufbauend kann nun eine
+Draft als draft:
+Der nächste Schritt dieser Arbeit besteht darin für das RFC8555 eine Erweiterung zu schreiben. Dieses draft würde, nach einigen korrekturen und Versionen eine Erweiterung für das klassiche ACME Protokoll darstellen, wie auch die IP und Telefonnummern erweiterungen darstellen.
 
+Draft als Grundlage:
+Ist das Draft ein fester bestandteil des ACME Protokolls kann darauf aufgebaut werden. Ein paar der möglichen Einsatzgebiete dieses Verfahrens könnten sein: Möchte eine größere Firma sicherstellen, dass alle Geräte mit denen Kommuniziert werden über ein eigenes Zertifikat verfügen, so kann die Kommunikation auf der Premisse aufbauen dass sich, nachdem ein Zertifikat angefragt wurde, im TPM Chip ein solches befindet. Diese Zertifikate können verwendet werden, damit alle Kommunikationspartner stehts wissen mit wem sie gerade Informationen austauschen.
 
 <!--
 Kommentare können so hinzugefügt werden.

@@ -20,7 +20,7 @@ Diskussionsgrundlage/Empfehlung:
 
 
 Das ACME Protokol wird verwendet um es Servern zu ermöglichen
-
+<!--
 \begin{table}[h]
 \centering
 \caption{Informationsverlust in \%, realer Datensatz}
@@ -41,6 +41,8 @@ Das ACME Protokol wird verwendet um es Servern zu ermöglichen
 \end{tabular}%
 }
 \end{table}
+
+-->
 
 \pagenumbering{roman}
 \setcounter{page}{1}

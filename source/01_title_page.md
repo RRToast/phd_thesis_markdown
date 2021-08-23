@@ -17,9 +17,9 @@
 \newcommand{\aName}{\aVorname\space \aNachname}
 
 % Prüfer_in
-\newcommand{\pTitle}{Prof. Dr.}
-\newcommand{\pVorname}{}
-\newcommand{\pNachname}{}
+\newcommand{\pTitle}{Prof. Dr.-Ing.}
+\newcommand{\pVorname}{Thomas}
+\newcommand{\pNachname}{Schreck}
 \newcommand{\pInstitution}{Hochschule München}
 
 % Betreuer_in

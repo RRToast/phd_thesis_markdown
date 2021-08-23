@@ -1,31 +1,14 @@
 # Abkürzungsverzeichnis {.unnumbered}
 
-API: **A**pplication **P**rogramming **I**nterface
-
-JSON: **J**ava**S**cript **O**bject **N**otation
-
 JOSE:
 
 JWS:
 
 JWT:
 
-ACME:
-
-PI:
-
 JWK:
 
-TPM:
-
-Nonce:
-
-SHA-256:
-
-base64: (abkürzung?)
-
-TXT:
-
+Replay-Nonce:
 
 
 \begin{tabbing}

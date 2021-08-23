@@ -60,7 +60,14 @@ Wie bereits angesprochen gibt es durch den TPM Chip die Möglichkeit die Integri
 Serverseitig:
 Sobald ein Client einen neuen Account anlegt, kann sein Account gebundener öffentlicher Schlüssel, in der Datenbank gespeichert werden. Übersendet nun dieser Client in einem newOrder Request seinen EK und AK Wert können alle drei Werte zusammen in der Datenbank verknüpft werden. Dadurch wird der Server im späteren Verlauf deutlich leichter handzuhaben. Wird beispielsweise eines der Geräte als vermisst gemeldet und es sollen alle Zertifikate revoked werden, so kann der Server durch die Verknüpfung zwischen den Account Daten und dem EK nicht nur genau sagen welcher Client Account zu dem verlorenen Chip gehört und Auskunft darüber geben was dieser in der letzten Zeit für Anfragen gestellt hat durch die logs. Es ist ihm auch möglich sofort alle zugehörigen Zertifikate zu revoken, da diese durch die Verknüpfung mit der EK alle eindeutig sind.
 
-<!--  TODO: wenn was einfällt, erweitern -->
+<!--  TODO: wenn was einfällt, erweitern :
+- Richtige Datenbank erstellen, am besten mit einfacher API zum erweitern und Abfragen von Daten
+- Weglassen der Prüfung welche Challenges gehen, wenn bei "ek" eh nur "ek-01" geht?
+- Beim pollen des Statusees sollte es eine Fehlerbehandlung geben falls der Status negativ ist, sonst evtl endlos schleife ...
+- Server kann CSR prüfen, ob der Public Key dem public AK Key entspricht
+- Zertifikate Chaining um zu vermeiden dass der Client jedes mal den gelichen bums mit AK machen muss
+
+-->
 
 
 <!--
