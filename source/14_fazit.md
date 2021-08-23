@@ -1,10 +1,25 @@
 # Fazit
 
-In diesem Kapietel sollen die Möglichen Angriffsvektoren besprochen werden die bei dem DNS sowie dem IP verfahren bestanden, sowie neue die durch die neue Methode erst hinzugekommen sind. Dabei wird unterteilt in Vektoren die in allen Verfahren relevant sind, jene die speziell auf das neue Verfahren zugeschnitten sind und abschließend sollen mögiche Einfallstore besprochen werden.
-
 ## Zusammenfassung
 
+In dieser Arbeit wurde die Frage behandelt, wie eine sichere Verteilung von X.509-Zertifikaten auf Linux-basierten Endbenutzersystemen aussehen kann. Dabei wurde bei dieser Arbeit nicht nur ein Schwehrpunkt auf die Verteilung von X.509-Zertifikaten sondern auch auf deren Speicherung und Verwendung gelegt. Mit dieser Arbeit soll es möglich gemacht werden die Funktionalität welche für Windows Systeme bereits zur Verfügung steht auch Linux-basierte Systemen zu ermöglichen.
+Dabei wurde sich dafür entschieden auf bereits existierende Projekte aufzubauen. Für das erstellen und verwalten von Zertifikaten sollte auf ACME zurückgegriffen werden und für die Prüfung von Endgeräten auf go-attestation von Google. Durch die Verbindung dieser Projekte und unter der Verwendung eines Chips, der eine eindeutige Identifikation erlaubt, war es möglich für einen Pi auf dem ein Linux System lief zu erstellen.
+Um dieses Ziel, der Forschungsfrage entsprechend umzusetzen sind zwei Akteure von nöten. Der erste stellt das Linux-basierte Endbenutzersystem dar, welches ein X.509 Zertifikat erhält, das andere ist die Instanz, welche ein solches Zertifikat zur Verfügung stellt. Sowohl ACME als auch go-attestation arbeiten dabei nach einem gleichen Client Server Model und so war es möglich diese Projekte Sinvoll mit einander zu verknüpfen um diese Bachelorarbeit zu verfassen. Der erste Schritt bestand dabei darin, die ACME Kommunikation zu analysieren und um eine neue Challenge zu erweitern. Diese Challenge stellt einen sicherungsmechanismus für die Verteilung der Zertifikate da. Denn dadurch ist es Serverseitig möglich das Endbenutzersystem eindeutig zu identifizieren.
+
+Zeck der Forschungsfrage
+
+Umsetzung
+
+Ergebnisse
+
+Ein ähnliches Verfahren wie dass unter der Verwendung des TPM Chips wurde für ACME bereits entwickelt. Dabei handelt es sich um zwei alternative Verfahren welche IP Adressen oder Telefonnummern für die Identifikation des Endbenutzersystems verwenden. Auch wenn beide in der Lage sind, genau wie das in dieser Arbeit beschriebene Verfahren, Zertifikate auszugstellen sowie das Endbenutzersystem zu identifizieren, gab es gute Gründe das neue Verfahren zu implementieren. Einmal dient die Verwendung von Telefonnummern zur Prüfung weniger der Prüfung des Endbenutzersystems und mehr der des Nutzers des Systems. Zweitens sind IP Adressen einem ständigen Wechsel ausgesetzt, was es schwierig macht ....... <!-- warum schwierig? --> 
+
+
+<!-- Regeln: Auführliche Schlussfolgerungen und Refelxion, zusammenfassung der zentralen Erkenntnisse, keine neuen Informationen, evtl Verweis auf offene Fragen/ evaluierung der Vorgehensweise, Präsens verweise auf meine Forschung im 1ter Vergangenheit -->
+
 ## Future Work
+
+Auf diesem Projekt aufbauend kann nun eine
 
 
 <!--

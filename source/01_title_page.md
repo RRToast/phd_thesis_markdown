@@ -3,7 +3,7 @@
   Workaround bzw. Rückgriff auf LaTex-Befehle, um zentrale Werte immer wieder verwenden zu können.
 -->
 % Abschlussarbeit
-\newcommand{\titel}{Authentifizierung von Systemen: Beschreibung eines Verfahrens zur sicheren Generierung, Verwahrung und Aktualisierung von Zertifikaten}
+\newcommand{\titel}{Sichere Verteilung von X.509-Zertifikaten auf Linux-basierten Endbenutzersystemen}
 \newcommand{\datum}{01.03.2018}
 
 % Autor_in
