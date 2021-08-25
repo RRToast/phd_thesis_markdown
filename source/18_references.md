@@ -8,4 +8,5 @@ Referenzen werden automatisch aus der BibTex-Datei (References.bib) generiert.
 ... die Du mit deinem Referenzmanager erstellen solltest.
 -->
 
-# Literatur 
+# Literaturverzeichnis
+\rhead{LITERATURVERZEICHNIS}

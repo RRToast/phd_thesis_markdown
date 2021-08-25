@@ -3,11 +3,11 @@
 
   Um auf Nummer sicher zu gehen, sollte das Dokument https://w3-mediapool.hm.edu/mediapool/media/fk07/fk07_lokal/studienangebot_3/studiengaenge_neu/docs/ifb/Anmeldung_Bachelorarbeit_IF_112017.pdf zusätzlich zu der Erklärung auf dieser Seite ausgefüllt, ausgedruckt und abgegeben werden.
 -->
-\chapter*{Erklärung}
+# Erklärung {.unnumbered}
 
 \begin{center}
-  \aName, geb. \aGeburtsdatum\space (\aStudiengruppe,\space \aSemester)
-\end{center}  
+  \aName, geb. \aGeburtsdatum\space(\aStudiengruppe,\space\aSemester, Matrikelnummer: \aMatrikelnummer)
+\end{center}
 
 \vspace*{1.0cm}
 \noindent

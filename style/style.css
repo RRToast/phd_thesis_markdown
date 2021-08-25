@@ -5,8 +5,14 @@ body {
     margin: 0 auto;
     line-height: 30px;
     font-size: 18px;
+<<<<<<< HEAD
     padding-left: 10px;
     padding-right: 100px;
+=======
+    padding-left: 0px;
+    /*padding-left: 350px;*/
+    padding-right: 50px;
+>>>>>>> origin/hm.edu
     color: #111;
 }
 

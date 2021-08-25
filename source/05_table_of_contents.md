@@ -2,8 +2,12 @@
 
 \rhead{}
 
+\setcounter{tocdepth}{2}
+
 \tableofcontents
 
 \newpage
 
-\rhead{\thepage\space von \pageref{LastPage}}
+\pagenumbering{arabic}
+
+\rhead{\rightmark}

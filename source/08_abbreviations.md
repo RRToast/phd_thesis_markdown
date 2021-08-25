@@ -1,15 +1,12 @@
 # Abkürzungsverzeichnis {.unnumbered}
 
-JOSE:
+## Nicht ausgerichtet {.unnumbered}
 
-JWS:
+API: **A**pplication **P**rogramming **I**nterface
 
-JWT:
+JSON: **J**ava**S**cript **O**bject **N**otation
 
-JWK:
-
-Replay-Nonce:
-
+## Ausgerichtet {.unnumbered}
 
 \begin{tabbing}
 \textbf{API}~~~~~~~~~~~~ \= \textbf{A}pplication \textbf{P}rogramming \textbf{I}nterface \\

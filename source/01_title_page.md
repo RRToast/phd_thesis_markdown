@@ -3,23 +3,26 @@
   Workaround bzw. Rückgriff auf LaTex-Befehle, um zentrale Werte immer wieder verwenden zu können.
 -->
 % Abschlussarbeit
-\newcommand{\titel}{Sichere Verteilung von X.509-Zertifikaten auf Linux-basierten Endbenutzersystemen}
+\newcommand{\titel}{Titel der Abschlussarbeit}
+\newcommand{\titelEN}{Title of your thesis}
 \newcommand{\datum}{01.03.2018}
 
 % Autor_in
-\newcommand{\aVorname}{Richard}
-\newcommand{\aNachname}{Reik}
-\newcommand{\aGeburtsdatum}{27.08.1998}
+\newcommand{\aVorname}{Max}
+\newcommand{\aNachname}{Mustermann}
+\newcommand{\aGeburtsdatum}{01.04.1998}
 \newcommand{\aInstitution}{Hochschule München}
-\newcommand{\aStudiengruppe}{IF8}
-\newcommand{\aSemester}{SS 2021}
+\newcommand{\aStudiengruppe}{IF7}
+\newcommand{\aSemester}{WS 17/2018}
+\newcommand{\aMatrikelnummer}{12345678}
 
-\newcommand{\aName}{\aVorname\space \aNachname}
+
+\newcommand{\aName}{\aVorname\space\aNachname}
 
 % Prüfer_in
-\newcommand{\pTitle}{Prof. Dr.-Ing.}
-\newcommand{\pVorname}{Thomas}
-\newcommand{\pNachname}{Schreck}
+\newcommand{\pTitle}{Prof. Dr.}
+\newcommand{\pVorname}{}
+\newcommand{\pNachname}{}
 \newcommand{\pInstitution}{Hochschule München}
 
 % Betreuer_in
@@ -37,20 +40,17 @@
 
 \begin{titlepage}
     \begin{center}
-
         \includegraphics[width=1\textwidth]{style/hm-fk07_logo.jpg}
 
-        \vspace*{1.0cm}
-
-        \LARGE
+        \Large
         \titel
 
-        \vspace{1.5cm}
-
-        \Large
-        \aName
+        \normalsize
+        \titelEN
 
         \vspace{0.5cm}
+        \Large
+        \aName
 
         \normalsize
         Bachelorarbeit Informatik
@@ -59,16 +59,14 @@
 
         \normalsize
         Prüfer:\\
-        \pTitle\space \pVorname\space \pNachname,\space \pInstitution
-
-        \vspace{0.5cm}
+        \pTitle\space\pVorname\space\pNachname,\space\pInstitution
 
         % Firmenlogo
         % \includegraphics[width=0.4\textwidth]{style/firmenlogo.png}
 
         \normalsize
         Betreuer:\\
-        \bTitle\space \bVorname\space \bNachname,\space \bInstitution
+        \bTitle\space\bVorname\space\bNachname,\space\bInstitution
 
         % Abgabedatum
         \datum
