@@ -60,11 +60,7 @@ target/
 node_modules/
 
 # output directory
-<<<<<<< HEAD
-# output/
-=======
 output/
->>>>>>> origin/hm.edu
 
 
 # Created by https://www.gitignore.io/api/intellij+iml

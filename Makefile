@@ -28,17 +28,6 @@ help:
 	@echo 'get local templates with: pandoc -D latex/html/etc	  				  '
 	@echo 'or generic ones from: https://github.com/jgm/pandoc-templates		  '
 
-<<<<<<< HEAD
-# other csl styles: https://github.com/citation-style-language/styles
-
-pdf:
-	pandoc "$(INPUTDIR)"/*.md \
-	-o "$(OUTPUTDIR)/thesis.pdf" \
-	-H "$(STYLEDIR)/preamble.tex" \
-	--template="$(STYLEDIR)/template.tex" \
-	--bibliography="$(BIBFILE)" 2>pandoc.log \
-	--csl="$(STYLEDIR)/ref_format.csl" \
-=======
 
 # convert dia files to png automatically
 # use the filename with the extension .png in your markdown text/code
@@ -58,25 +47,16 @@ pdf: convert
 	--template=${STYLEDIR}/template.tex \
 	--bibliography=${BIBFILE} \
 	--csl=${STYLEDIR}/ref_format.csl \
->>>>>>> origin/hm.edu
 	--highlight-style pygments \
 	--citeproc \
 	-V fontsize=12pt \
 	-V papersize=a4paper \
-<<<<<<< HEAD
-	-V documentclass:report \
-	-V lang:de-DE \
-	-V mainlang:german \
-	-N \
-	--pdf-engine=xelatex
-=======
 	-V documentclass=report \
 	-V lang:german \
 	-V mainlang:german \
 	-N \
 	--pdf-engine=xelatex \
 	--verbose
->>>>>>> origin/hm.edu
 
 
 tex: convert
@@ -87,21 +67,12 @@ tex: convert
 	--bibliography="${BIBFILE}" \
 	-V fontsize=12pt \
 	-V papersize=a4paper \
-<<<<<<< HEAD
-	-V documentclass:report \
-	-V lang:de-DE \
-	-V mainlang:german \
-	-N \
-	--csl="$(STYLEDIR)/ref_format.csl" \
-	--pdf-engine=xelatex
-=======
 	-V documentclass=report \
 	-V lang:german \
 	-V mainlang:german \
 	-N \
 	--csl="${STYLEDIR}/ref_format.csl" \
 	--latex-engine=xelatex
->>>>>>> origin/hm.edu
 
 
 docx: convert
