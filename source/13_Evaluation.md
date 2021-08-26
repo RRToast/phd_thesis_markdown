@@ -1,7 +1,7 @@
 # Evaluation
 
 ## Testlauf der ACME Erweiterung
-Um die ACME Erweiterung zu testen habe ich auf meinem Rechner den ACME Server und auf einem Raspberry PI mit TPM Chip den Client laufen lassen. Ziel des Ablaufes war es sicherzustellen, dass die in 4. beschrieben client- und serverseitigen Erweiterung wie geplant funktionieren. Darunter gehören Funktionalitäten, wie das Anlegen eines Accounts und das Einholen eines Zertifikates, genauso wie die neue Challenge, die neue Art CSR zu erstellen, sowie der richtige Umgang mit dem TPM Chip und Zertifikaten.
+Um die ACME Erweiterung zu testen habe ich auf meinem Rechner den ACME Server und auf einem Raspberry PI mit TPM Chip den Client laufen lassen. Ziel des Ablaufes war es sicherzustellen, dass die in 4. beschrieben client- und serverseitigen Erweiterung wie geplant funktionieren. Darunter gehören Funktionalitäten, wie das Anlegen eines Accounts, das Erstellen und verwenden der neuen Challenge, die Identifizierung des Endbenutzersystems, sowie die neue Art CSR zu erstellen.
 
 ![Get Request des Clients \label{mein_label}](source/figures/ACMEclientAblauf.png)
 *ACME Ablauf auf Pi*
@@ -11,7 +11,7 @@ Um die ACME Erweiterung zu testen habe ich auf meinem Rechner den ACME Server un
 
 ## Ergebnisse
 
-Der Output beschreibt den Ablauf des ACME Protokolls, erweitert um die "ek" Challenge. Am Ende dieser Kommunikation befindet sich im TPM Chip das Zertifikat, für einen Benutzer des Client geräts zugänglich gespeichert, sowie dessen privater Schlüssel, für den Nutzer unzugänglich gespeichert.
+Der Output beschreibt den Ablauf des ACME Protokolls, erweitert um die "ek" Challenge. Am Ende dieser Kommunikation befindet sich im TPM Chip das Zertifikat, für einen Benutzer des Client geräts zugänglich gespeichert, sowie dessen privater Schlüssel, für den Nutzer unzugänglich gespeichert. Da als Betriebsystem für den Pi Linux verwendet wurde, ist das Ziel dieser Bachelorarbeit, das verteilen von X.509 Zertifikaten auf Linux-basierten Endbenutzersystemen, damit erfüllt.
 
 <!-- TODO: erweitern, in Verbindung mit dem Punkt drüber -->
 
@@ -39,7 +39,7 @@ In diesem Kapitel sollen allgemein mögliche, sowie EK-Challenge-spezifische Ang
 
 Wie im letzten Kapitel bereits besprochen prüft der ACME Server nie die Integrität des anfragenden Systems. Schafft es ein Angreifer, die Kontrolle über den TPM Chip zu erlangen, kann er sich über ACME Zertifikate beschaffen, kritische Informationen wie private Schlüssel aus dem Chip zu extrahieren ist jedoch nicht möglich.
 
-Ein serverseitiger Angriff kann ein *D*enial *o*f *S*ervice, kurz DoS Angriff sein. Hierbei wird der Server durch eine übermäßige Anzahl an Anfragen lahmgelegt. So können zwar keine Informationen extrahiert werden, das Ausstellen von Zertifikaten, aber auch die Verifikation bereits vorhandener Zertifikate kann dabei jedoch blockiert werden. Da der ACME Server nicht nur als Website sondern auch als CA funktioniert, kann, je nach Architektur des Servers, durch einen solchen Angriff großer Schaden angerichtet werden. Wenn ein neuer Kommunikationspartner auftritt kann jedes Gerät zur Überprüfung des Zertifikats des Gesprächspartners eine Anfrage an die CA stellen, um sicherzustellen dass das Zertifikat auch wirklich von ihr ausgestellt wurde. Können Zertifikate nicht mehr verifiziert werden, kann es passieren, dass Kommunikation grundsätzlich abgelehnt wird. <!-- TODO: Wenn Zeit, weiter Ausführen -->
+Der Server kann durch einen Denial of Service (DoS) Angriff lahmgelegt werden. Hierbei wird der Server durch eine übermäßige Anzahl an Anfragen lahmgelegt. So können zwar keine Informationen extrahiert werden, das Ausstellen von Zertifikaten, aber auch die Verifikation bereits vorhandener Zertifikate kann dabei jedoch blockiert werden. Da der ACME Server nicht nur als Website sondern auch als CA funktioniert, kann, je nach Architektur des Servers, durch einen solchen Angriff großer Schaden angerichtet werden. Wenn ein neuer Kommunikationspartner auftritt kann jedes Gerät zur Überprüfung des Zertifikats des Gesprächspartners eine Anfrage an die CA stellen, um sicherzustellen dass das Zertifikat auch wirklich von ihr ausgestellt wurde. Können Zertifikate nicht mehr verifiziert werden, kann es passieren, dass Kommunikation grundsätzlich abgelehnt wird. <!-- TODO: Wenn Zeit, weiter Ausführen -->
 -> Hier gibt es verschiedene Möglichkeiten den Server zu schützen [@ddos-abwehr] [@ddos-anti] [@ddos-prvention].
 
 Es gibt noch einige andere Angriffsmöglichkeiten, die nur kurz angesprochen aber nicht länger behandelt werden sollen, da sie unwahrscheinlich sind oder praktisch keinen Nutzen für den Angreifer bedeuten, auch wenn sie problematisch für den Client sein können. So kann clientseitig das Entfernen oder Zerstören des TPM Chips die Kommunikation lahm legen, denn ohne Zertifikat ohne entsprechenden privaten Schlüssel ist Kommunikation unmöglich. In diesem Fall muss mindestens der Chip sowie der entsprechende Eintrag in der Serverdatenbank ausgetauscht werden.
@@ -58,7 +58,7 @@ Durch die aktuelle Implementierung des Clients kann dieser nicht auf möglich St
 <!-- TODO: Die aktuelle Implemntierung des Clients ist nicht für Serverseitige Störfälle ausgreichtet -->
 
 Serverseitig:
-Sobald ein Client einen neuen Account anlegt, kann sein accountgebundener öffentlicher Schlüssel in der Datenbank gespeichert werden. Übersendet nun dieser Client in einem new Order Request seinen EK und AK Wert können alle drei Werte zusammen in der Datenbank verknüpft werden. Dadurch wird der Server im späteren Verlauf deutlich leichter handzuhaben. Wird beispielsweise eines der Geräte als vermisst gemeldet und es sollen alle Zertifikate widerrufen werden, so kann der Server durch die Verknüpfung zwischen den Account-Daten und dem EK nicht nur genau sagen welcher Client-Account zu dem verlorenen Chip gehört und Auskunft darüber geben was dieser in der letzten Zeit für Anfragen gestellt hat. Durch die logs ist es ihm auch möglich, sofort alle zugehörigen Zertifikate zu widerrufen, da diese durch die Verknüpfung mit der EK alle eindeutig sind.
+Sobald ein Client einen neuen Account anlegt, kann sein accountgebundener öffentlicher Schlüssel in der Datenbank gespeichert werden. Übersendet nun dieser Client in einem new Order Request seinen EK und AK Wert können alle drei Werte zusammen in der Datenbank verknüpft werden. Dadurch wird der Server im späteren Verlauf deutlich leichter handzuhaben. Wird beispielsweise eines der Geräte als vermisst gemeldet und es sollen alle Zertifikate widerrufen werden, so kann der Server durch die Verknüpfung zwischen den Account-Daten und dem EK nicht nur genau sagen welcher Client-Account zu dem verlorenen Chip gehört und Auskunft darüber geben was dieser in der letzten Zeit für Anfragen gestellt hat. Durch die logs ist es ihm auch möglich, sofort alle zugehörigen Zertifikate zu widerrufen, da diese durch die Verknüpfung mit der EK alle eindeutig diesem Client zugeordnet sind. Auch die Verwendung des EK Zertifikates statt des in der Arbeit beschrieben Public Keys wäre möglich. So kann vor dem Eintragen des Wertes in der Datenbank das Zertifikat geprüft werden. Auch die Gültigkeit dieses Zertifikates kann immer wieder Serverseitig überprüft werden um sicher zu stellen dass der Herrsteller nachträglich keine Fehler im Gerät entdeckt hat.
 
 Wie bereits besprochen wurde für die Umsetzung keine richtige Datenbank verwendet. Eine Möglichkeit, den Server sinnvoll zu erweitern, wäre das Hinzufügen einer solchen Datenbank mit entsprechender Infrastruktur, sowie dem Bereitstellen einer API, die es autorisierten Personen erlaubt, Einträge in die Datenbank zu schreiben. Im gleichen Zug kann es auch sinnvoll sein, es Systemadministratoren zu erlauben, Zertifikate zu widerrufen, sollte beispielsweise ein Endbenutzer-System verloren gegangen sein.
 
@@ -66,69 +66,4 @@ Zusätzlich kann der Server auf einem Docker Container[@docker] laufen gelassen 
 
 Eine Alternative zu dem im RFC8555 beschrieben Vorgehen zum neuen Ausstellen von Zertifikaten ist das Verketten von Zertifikaten, auch Certificate Chaining genannt[@chain-of-trust]. Grob gesagt, wenn der Server dem bereits vorhanden Zertifikat vertraut, so kann er, falls mit diesem Zertifikat ein Neues angefragt wird, transitiv auch der neuen CSR vertrauen.
 
-<!--  TODO: wenn was einfällt, erweitern :
-- Richtige Datenbank erstellen, am besten mit einfacher API zum erweitern und Abfragen von Daten
-- Weglassen der Prüfung welche Challenges gehen, wenn bei "ek" eh nur "ek-01" geht?
-- Beim pollen des Stausees sollte es eine Fehlerbehandlung geben falls der Status negativ ist, sonst evtl endlos schleife ...
-- Server kann CSR prüfen, ob der Public Key dem public AK Key entspricht
-- Zertifikate Chaining um zu vermeiden dass der Client jedes mal den gleichen bums mit AK machen muss
--->
-
-
-<!--
-Bilder können mit der folgenden Syntax eingefügt werden:
-![Bildunterschrift \label{mein_label}](source/figures/beispielbild.jpg){ width=50% }
-
-Details zu den Attributen wie width und height gibt es unter:
-http://pandoc.org/MANUAL.html#extension-link_attributes
-
-![In den Medien werden für Hacker häufig Symbolbilder wie dieses verwendet. Foto: [pixabay.com](https://pixabay.com/photo-2883632/), Nutzer: [geralt](https://pixabay.com/de/users/geralt-9301/) Lizenz: [Creative Commons CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.de) \label{mein_label}](source/figures/beispielbild.jpg){ width=100% }
-
-## Schlussfolgerung
-
-Das ist die Schlussfolgerung des Kapitels. Quisque nec purus a quam consectetur volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In lorem justo, convallis quis lacinia eget, laoreet eu metus. Fusce blandit tellus tellus. Curabitur nec cursus odio. Quisque tristique eros nulla, vitae finibus lorem aliquam quis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-
--->
-
-
-
-
-
-<!--
-## Was sind Angriffsvektoren
-
-Einfallstore.
-
-## Altbekannte Angriffsvektoren
-
-1. Replay Angriffe (Replay noncen)
-2. JWS (Man in the Middle Angriffe, da Signatur den Content schützt. Änderungen ohne die Singatur ungültig zu machen sind nicht möglich)
-3. dos (Server abhänging. Nicht sicher ob Teil meiner BA)
-4. Sozial Hacking (fällt flach da Automatisiert)
-
-### Neuartige Angriffsvektoren
-
-1. Impersonation Angriff
-  Vor dem ersten Schritt: Er kann erfolgreich einen Account anlegen und eine Order senden, allerdings wird hier der Value überprüft und die Order verweigert
-  Nach den ersten zwei Schritten: Die Account sowie die Order URL sind unbekannt. Anfragen können nicht geschickt werden.
-  (Falls doch bekannt kann die Challenge nicht erfüllt werden, da den Private Key nur der Klient kennt)
-  Nach dem Vallidieren: MÖGLICH? URL wird benötigt, sowie JWS Values, keine weitere Sicherheit
-
-2. MitM
-  Kommunikation verschlüsselt, JWS, Private Keys nur auf Client/Server. Allerdings, was ist wenn der Client als zwischen speicher funktioniert. Wenn er den JWS Wert lesen kann, ist er in der Lage die Kommunikation mit zu verfolgen -> Nutzen unklar
-
-3. Continues Validation durch Zertifikate Chaining
-  ?
-
-4. Server Impersonation
-  Möglich die gesammte Kommunikation zu faken -> Gerät wird nutzlos
-
-5. Physischen Schaden bsp: TPM Chip entfernen, oder zerstört
-
-6. Abschießen des Daemon (Zertifikate können nicht mehr ausgestellt werden)
-
-7. Server DB kaputt machen (Daten verlust) / Datenbank mit falschen Daten füttern
-
-8. Was passiert wenn ein Angreifer einen Stick einfügt und über diesen Bootet? / Was passiert wenn der TPM Chip abgebaut wird und wo anders eingesetzt wird?
-
--->
+<!-- TODO: Hier im letzten Punkt auf die Vor-  und Nachteile genauer eingehen. Generell mehr ins Detail und weniger allgemein. -->

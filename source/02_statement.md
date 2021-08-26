@@ -6,8 +6,8 @@
 \chapter*{Erklärung}
 
 \begin{center}
-  \aName, geb. \aGeburtsdatum\space (\aStudiengruppe,\space \aSemester)
-\end{center}  
+  \aName, geb. \aGeburtsdatum\space (\aStudiengruppe,\space \aSemester, Matrikelnummer: \aMatrikelnummer))
+\end{center}
 
 \vspace*{1.0cm}
 \noindent
@@ -25,4 +25,4 @@ München, \datum
 
 Unterschrift
 \vspace*{\fill}
-\pagenumbering{gobble}
+\pagenumbering{arabic}

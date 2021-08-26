@@ -1,50 +1,17 @@
-# Zusammenfassung {.unnumbered}
-
-(Worum geht es?)
-Sicherheit ist ein Thema das zunehmend an Wichtigkeit gewinnt, vor allem im Internet wird kommunikation zunehnemend verschlüsselt. Nachrichten die heutzutage unverschlüsselt verschickt werden sind nichtmehr die Regel sondern stellen eine Ausnahme dar. Daher ist es wichtig zu verstehen wie Sicherheit gewährleistet werden kann, auch wenn Geräte sich nichtmehr in eigener Hand befinden.
-
-Zielstellung dieser Arbeit ist verwalten von Zertifikaten, welche benutzt werden können um jene Sicherheit zu gewährleisten. Dabei soll besonderenDie sichere Erstellung, Aktualisierung und Speicherung von Zertifikaten.
-Problemstellung:
-Forschungsfrage:
-
-(Wie bin ich vorgegangen?)
-Methoden:
-
-(Was sind meine wichtigsten Ergebnisse?)
-Ergebnisse/Fazit:
-
-
-(Was bedeuten meine Ergebnisse?)
-Diskussionsgrundlage/Empfehlung:
+# Abstract {.unnumbered}
 
 
 
-Das ACME Protokol wird verwendet um es Servern zu ermöglichen
+In dieser Arbeit wird die Fragestellung behandelt, wie es möglich ist für Linx-basierten Endbenutzersysteme Zertifikate zu verteilen. Zu diesem Zweck wurde mithilfe des TPM Moduls eine neue ACME Challenge entwickelt. Mit der neuen sogennten "EK" Challenge ist es dem Endbenutzersystem möglich sich gegenüber eines ACME Servers zu verifizieren. Um das Verfahren umzusetzen wurde, statt einen neuen ACME Server zu schrieben auf ein Projekt von letsencrypt das sich pebble nennt zurückgegriffen. Dabei handelt es sich um einen light-weight Server welcher in dieser Arbeit so umgebaut wurde, dass es einem ebenfalls in dieser Arbeit geschrieben Client möglich ist die neue Challenge zu verwenden. Das Verfahren funktioniert und kann verwendet werden um das ACME Protokoll zu erweitern. Im Rahmen dieser Arbeit werden auch weiterführende Sicherheitsmaßnahmen besprochen, welcher man sich bei der Umsetzung dieses Projektes bedienen kann.
+
 <!--
-\begin{table}[h]
-\centering
-\caption{Informationsverlust in \%, realer Datensatz}
-\label{tablerealinfolost}{
-\begin{tabular}{p{2cm} p{2cm} p{3cm} p{4cm}}
-  \hline
-  k & l & t & Informationsverlust \\
-  \hline
-  2 & - & - & -64,288 \% \\
-  3 & - & - & -69,002 \% \\
-  4 & - & - & -69,008 \% \\
-  4 & 3 & - & -69,233 \% \\
-  4 & 5 & - & -69,652 \% \\
-  4 & - & 0,7 & -70,164 \% \\
-  4 & - & 0,1 & -70,409 \% \\
-  4 & - & 0,01 & -82,463 \% \\
-  \hline
-\end{tabular}%
-}
-\end{table}
-
+(Worum geht es?)
+(Wie bin ich vorgegangen?)
+(Was sind meine wichtigsten Ergebnisse?)
+(Was bedeuten meine Ergebnisse?)
 -->
 
-\pagenumbering{roman}
+\pagenumbering{arabic}
 \setcounter{page}{1}
 
 \newpage

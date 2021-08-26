@@ -18,8 +18,8 @@ Ergebnisse-->
 ## Future Work
 Der nächste Schritt dieser Arbeit besteht darin für das RFC8555 eine Erweiterung zu schreiben. Dieses draft würde, nach einigen korrekturen und Versionen eine Erweiterung für das klassiche ACME Protokoll darstellen, wie auch die IP und Telefonnummern Erweiterungen darstellen.
 
-Draft als Grundlage:
-Ist das Draft ein fester bestandteil des ACME Protokolls kann darauf aufgebaut werden. Ein paar der möglichen Einsatzgebiete dieses Verfahrens könnten sein: Möchte eine größere Firma sicherstellen, dass alle Geräte mit denen Kommuniziert werden über ein eigenes Zertifikat verfügen, so kann die Kommunikation auf der Premisse aufbauen dass sich, nachdem ein Zertifikat angefragt wurde, im TPM Chip ein solches befindet. Diese Zertifikate können verwendet werden, damit alle Kommunikationspartner stehts wissen mit wem sie gerade Informationen austauschen.
+Ist das Draft ein fester bestandteil des ACME Protokolls kann darauf aufgebaut werden. Ein beispielhafte Verwendung dieses Verfahrens könnten sein: Möchte eine größere Firma sicherstellen, dass alle Geräte mit denen Kommuniziert werden über ein eigenes Zertifikat verfügen, so kann die Kommunikation auf der Premisse aufbauen, dass sich nachdem ein Zertifikat angefragt wurde, im TPM Chip ein solches befindet. Diese Zertifikate können verwendet werden, damit alle Kommunikationspartner stehts wissen mit wem sie gerade Informationen austauschen. Der ACME Server fungiert dann auch gleichzeitig als Anfragemöglichkeit für jeden Gesprächspartners welcher das Zertifikat des jeweils anderen Gesprächspartners prüfen möchte.
+Weiterführend wäre es auch Sinvoll diese Projekt statt in Pebble in letsencrypts, oder einen anderen, vollwertigen ACME Server zu implementieren.
 
 <!--
 Kommentare können so hinzugefügt werden.
