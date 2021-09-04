@@ -24,12 +24,6 @@
 \newcommand{\pNachname}{Schreck}
 \newcommand{\pInstitution}{Hochschule München}
 
-% Betreuer_in
-\newcommand{\bTitle}{Dr.}
-\newcommand{\bVorname}{}
-\newcommand{\bNachname}{}
-\newcommand{\bInstitution}{Firma GmbH}
-
 \title{\titel}
 \author{\aName}
 
@@ -69,8 +63,6 @@
         % \includegraphics[width=0.4\textwidth]{style/firmenlogo.png}
 
         \normalsize
-        Betreuer:\\
-        \bTitle\space \bVorname\space \bNachname,\space \bInstitution
 
         % Abgabedatum
         \datum
