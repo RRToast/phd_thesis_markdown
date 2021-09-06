@@ -2,12 +2,10 @@
   Zentrale Variablen:
   Workaround bzw. Rückgriff auf LaTex-Befehle, um zentrale Werte immer wieder verwenden zu können.
 -->
-% Abschlussarbeit
 \newcommand{\titel}{Sichere Verteilung von X.509-Zertifikaten auf Linux-basierten Endbenutzersystemen}
 \newcommand{\titelEN}{Secure X.509 certificate deployment on Linux-based user clients}
 \newcommand{\datum}{01.03.2018}
 
-% Autor_in
 \newcommand{\aVorname}{Richard}
 \newcommand{\aNachname}{Reik}
 \newcommand{\aGeburtsdatum}{27.08.1998}
@@ -18,7 +16,6 @@
 
 \newcommand{\aName}{\aVorname\space \aNachname}
 
-% Prüfer_in
 \newcommand{\pTitle}{Prof. Dr.-Ing.}
 \newcommand{\pVorname}{Thomas}
 \newcommand{\pNachname}{Schreck}

@@ -4,7 +4,7 @@ Im folgenden Kapitel soll beschrieben werden, wie unter Zuhilfenahme der Informa
 ## Architektur
 Wie in Abbildung \ref{clientServer} verdeutlicht werden soll, handelt es sich bei der Lösung um zwei miteinander kommunizierende Parteien, den ACME-Server und den ACME-Client. Bei dem ACME-Server handelt es sich um eine inhaltliche Erweiterung für ein bereits existierenden ACME-Server sowie das Erweitern eines Datenspeichers. Auf der Clientseite steht ein Linux-System, das auf einen TPM-Chip zugreifen kann.
 
-![Vereinfachte Darstellung des Client Server Aufbaus \label{clientServer}](source/figures/ClientServer.png){width=90%}
+![Vereinfachte Darstellung des Client-Server-Aufbaus \label{clientServer}](source/figures/ClientServer.png){width=90%}
 
 ### Einrichtung des ACME-Client
 Für die Einrichtung des ACME-Client müssen zwei Voraussetzungen erfüllt sein: Erstens, dass der Client auf einem Linux-System läuft, wobei gleichgültig ist, welche Linux-Distribution verwendet wird, zweitens die korrekte Installation des TPM-Chips. Hierbei gibt es zwei Möglichkeiten, wie der Chip installiert werden kann. So ist es möglich, den Chip an dem jeweiligen Gerät entsprechend der Anleitung physisch zu befestigen und einzurichten. Der Chip kann aber auch auf dem Client-Gerät simuliert werden. Welche Simulation dabei verwendet wird, ist dem Architekten des Systems überlassen. Es muss jedoch beachtet werden, dass die Sicherheit, wie sie in den vorangegangen Kapiteln beschrieben wurde, nur durch den physischen Chip garantiert werden kann. Da der Chip immer nur eine Kommunikation gleichzeitig erlaubt, muss sichergestellt werden, dass kein anderes Programm gerade mit diesem kommuniziert und eine Kommunikation auf diese Weise blockiert. Ein einfacher Test in Linux sieht folgendermaßen aus:
@@ -103,7 +103,6 @@ Nachdem der Client registriert ist, kann dieser ein neues Zertifikat anfragen. D
 ```
 *Listing 4.2.2.1: Server Antwort auf Challenge Anfrage*
 
-![getOrder Body \label{orderbody}](source/figures/ACMEGetOrderBody.png)
 
 Um mit dem neuen "Identifier" etwas anfangen zu können, muss der Server um den Identifier sowie die neue "ek-01"-Challenge erweitert werden. Das folgende Codebeispiel soll dabei beispielhaft für die gesamte Implementierung der neuen "Identifier" gelten:
 
