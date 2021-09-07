@@ -1,5 +1,5 @@
 # Praktische Umsetzung \label{praktisch}
-Im folgenden Kapitel soll beschrieben werden, wie unter Zuhilfenahme der Informationen aus den letzten zwei Kapiteln eine Implementierung des Verfahrens realisiert wurde. Dazu wurde dieses Kapitel in zwei Teile eingeteilt. Im ersten Teil soll der Aufbau des Systems aus Linux-basiertem Client mit zugehörigem TPM-Chip und Server mit zugehöriger Datenbank besprochen werden. Im zweiten Teil geht es um die Implementierung des Verfahrens, die anhand von ausgwählten Codebeispielen erklärt werden soll.
+Im folgenden Kapitel soll beschrieben werden, wie unter Zuhilfenahme der Informationen aus den letzten zwei Kapiteln eine Implementierung des Verfahrens realisiert wurde. Dazu wurde dieses Kapitel in zwei Teile eingeteilt. Im ersten Teil soll der Aufbau des Systems aus Linux-basiertem Client mit zugehörigem TPM-Chip und Server mit zugehöriger Datenbank besprochen werden. Im zweiten Teil geht es um die Implementierung des Verfahrens, die anhand von ausgewählten Codebeispielen erklärt werden soll.
 
 ## Architektur
 Wie in Abbildung \ref{clientServer} verdeutlicht werden soll, handelt es sich bei der Lösung um zwei miteinander kommunizierende Parteien, den ACME-Server und den ACME-Client. Bei dem ACME-Server handelt es sich um eine inhaltliche Erweiterung für ein bereits existierenden ACME-Server sowie das Erweitern eines Datenspeichers. Auf der Clientseite steht ein Linux-System, das auf einen TPM-Chip zugreifen kann.
@@ -11,7 +11,7 @@ Für die Einrichtung des ACME-Client müssen zwei Voraussetzungen erfüllt sein:
 ```shell
 $ sudo cat /dev/tpm0
 ```
-*Listing 4.1.1: Schnellcheck für TPM erreichbarkeit*
+*Listing 4.1.1: Schnellcheck für TPM Erreichbarkeit*
 
 Erhält man auf diese Anfrage die Antwort "resource is busy", wird der TPM-Chip durch einen anderen Prozess blockiert. In der hier beschrieben praktischen Umsetzung wurde ein physischer TPM-Chip und keine Emulation oder Simulation verwendet.
 
