@@ -1,5 +1,5 @@
 # Praktische Umsetzung \label{praktisch}
-Im folgenden Kapitel soll beschrieben werden, wie unter Zuhilfenahme der Informationen aus den letzten zwei Kapiteln eine Implementierung des Verfahrens realisiert wurde. Dazu wurde dieses Kapitel in zwei Teile eingeteilt. Im ersten Teil soll der Aufbau des Systems aus Linux-basiertem Client mit zugehörigem TPM-Chip und Server mit zugehöriger Datenbank besprochen werden. Im zweiten Teil geht es um die Implementierung des Verfahrens, die anhand von ausgwählten Codebeispielen erklärt werden soll.
+Im folgenden Kapitel soll beschrieben werden, wie unter Zuhilfenahme der Informationen aus den letzten zwei Kapiteln eine Implementierung des Verfahrens realisiert wurde. Dazu wurde dieses Kapitel in zwei Teile eingeteilt. Im ersten Teil soll der Aufbau des Systems aus Linux-basiertem Client mit zugehörigem TPM-Chip und Server mit zugehöriger Datenbank besprochen werden. Im zweiten Teil geht es um die Implementierung des Verfahrens, die anhand von ausgewählten Codebeispielen erklärt werden soll.
 
 ## Architektur
 Wie in Abbildung \ref{clientServer} verdeutlicht werden soll, handelt es sich bei der Lösung um zwei miteinander kommunizierende Parteien, den ACME-Server und den ACME-Client. Bei dem ACME-Server handelt es sich um eine inhaltliche Erweiterung für ein bereits existierenden ACME-Server sowie das Erweitern eines Datenspeichers. Auf der Clientseite steht ein Linux-System, das auf einen TPM-Chip zugreifen kann.
@@ -11,12 +11,12 @@ Für die Einrichtung des ACME-Client müssen zwei Voraussetzungen erfüllt sein:
 ```shell
 $ sudo cat /dev/tpm0
 ```
-*Listing 4.1.1: Schnellcheck für TPM erreichbarkeit*
+*Listing 4.1.1: Schnellcheck für TPM Erreichbarkeit*
 
 Erhält man auf diese Anfrage die Antwort "resource is busy", wird der TPM-Chip durch einen anderen Prozess blockiert. In der hier beschrieben praktischen Umsetzung wurde ein physischer TPM-Chip und keine Emulation oder Simulation verwendet.
 
 ### Aufsetzen des ACME-Servers
-Für diese Arbeit wurde sich bereits existierender Software bedient. Pebble ist ein ACME-Server, der von letsencrypt zur Verfügung gestellt wird[@pebble]. Dabei handelt es sich um eine vereinfachte Version, die für Testzwecke, aber nicht auf live-Systemen verwendet werden sollte. Diese stellt alle grundlegenden Funktionen, die für die folgenden Schritte benötigt werden, zur Verfügung. Einzig ein persistenter Datenspeicher muss hierfür erstellt werden. Da es sich um ein Proof-of-Concept handelt, wurden die EK-Werte, gegen die getestet werden soll, statt in einer realen Datenbank in GO-Programmen hartkodiert, wie im folgenden Listing zu sehen ist. Wichtig ist nur, dass die Werte persistent gespeichert sind und der Server diese abfragen kann.
+Für diese Arbeit wurde sich bereits existierender Software bedient. "Pebble" ist ein ACME-Server, der von "letsencrypt" zur Verfügung gestellt wird[@pebble]. Dabei handelt es sich um eine vereinfachte Version, die für Testzwecke, aber nicht auf live-Systemen verwendet werden sollte. Diese stellt alle grundlegenden Funktionen, die für die folgenden Schritte benötigt werden, zur Verfügung. Einzig ein persistenter Datenspeicher muss hierfür erstellt werden. Da es sich um ein Proof-of-Concept handelt, wurden die EK-Werte, gegen die getestet werden soll, statt in einer realen Datenbank in GO-Programmen hartkodiert, wie im folgenden Listing zu sehen ist. Wichtig ist nur, dass die Werte persistent gespeichert sind und der Server diese abfragen kann.
 ```go
 const pubPEM = `
 -----BEGIN RSA PUBLIC KEY-----
@@ -35,7 +35,7 @@ mQIDAQAB
 Das Projekt wurde sowohl server- wie auch clientseitig in der Programmiersprache "GO" geschrieben. Als Server wurde der eigene Rechner verwendet, der Client lief auf einem Raspberry PI, der Code für beide wurde vorrangig auf dem Rechner geschrieben. Die IP-Adressen sind beispielhafte Werte, die nur dazu dienen um aufzuzeigen, wie die Kommunikation zum ACME-Server ermöglicht wird und, darauf aufbauend, wie die neue EK-Challenge implementiert und verwendet werden kann. Die verwendeten Bilder sollen dabei als visuelle Stütze dienen und sind nicht ausreichend, um das Projekt nachzubauen.
 
 ### Implementierung des regulären ACME-Ablaufs
-Wie bereits in den Grundlagen beschrieben, bedient sich die Kommunikation zwischen dem Client und dem Server Replay-Noncen sowie JWS. Um die Replay-Nonce zu erhalten, reicht es, einen HEAD-Request an die von Pebble für diesen Zweck bereitgestellte Schnittstelle zu senden. Der Aufbau dieser Methode ist unabhängig von der Art der Challenge und gilt somit für EK genauso wie für DNS und HTTP und wird im folgenden Listing beschrieben.
+Wie bereits in den Grundlagen beschrieben, bedient sich die Kommunikation zwischen dem Client und dem Server Replay-Noncen sowie JWS. Um die Replay-Nonce zu erhalten, reicht es, einen HEAD-Request an die von "Pebble" für diesen Zweck bereitgestellte Schnittstelle zu senden. Der Aufbau dieser Methode ist unabhängig von der Art der Challenge und gilt somit für EK genauso wie für DNS und HTTP und wird im folgenden Listing beschrieben.
 ```go
 func (n dummyNonceSource) Nonce() (string, error) {
 	if globNonce != "" {
@@ -56,7 +56,7 @@ func (n dummyNonceSource) Nonce() (string, error) {
 ```
 *Listing 4.2.1: clientseitige Noncen beschaffung, encryption.go*
 
-In der hier beschriebenen Methode wird zuallererst geprüft, ob bereits eine Nonce, hier globNonce genannt, vorhanden ist. Falls nicht, wird ein Request ausgesendet und der Response-Header für die Replay-Nonce ausgelesen. Der erste Schritt ist deshalb wichtig, da im folgenden Ablauf jede Antwort des Servers eine neue Nonce übersendet, die den Wert von globNonce überschreibt. So muss der Client nicht nach jeder Kommunikation erst eine neue Nonce vom Server erfragen.
+In der hier beschriebenen Methode wird zuallererst geprüft, ob bereits eine Nonce, hier "globNonce" genannt, vorhanden ist. Falls nicht, wird ein Request ausgesendet und der Response-Header für die Replay-Nonce ausgelesen. Der erste Schritt ist deshalb wichtig, da im folgenden Ablauf jede Antwort des Servers eine neue Nonce übersendet, die den Wert von "globNonce" überschreibt. So muss der Client nicht nach jeder Kommunikation erst eine neue Nonce vom Server erfragen.
 
 Zum Signieren der Nachrichten wird clientseitig ein Schlüsselpaar generiert. Wie im theoretischen Teil bereits besprochen, ist es sinnvoll, das Schlüsselpaar vom TPM-Chip generieren zu lassen. Beispielcode aus der Methode für den Kontoerstellungs-Request:
 ```go
@@ -78,7 +78,7 @@ Nur in diesem Request, das im Listing "Anfrage zum erstellen eines neuen Kontos"
 Die neue Challenge umfasst wie die anderen Challenges auch drei Schritte. Erst muss eine Order beim Server aufgegeben werden, dann muss die Challenge aktiviert und anschließend erfüllt werden. Dieser Prozess, zusammen mit dem Anfragen und Verwenden des Zertifikates, soll in diesem Unterkapitel beschrieben werden. Die Idee hinter jeder Änderung bezieht sich dabei auf den im theoretischen Teil beschriebenen Ablauf.
 
 #### Order platzieren
-Nachdem der Client registriert ist, kann dieser ein neues Zertifikat anfragen. Dazu soll die neu definierte EK-Challenge verwendet werden, wofür der Client eine Verbindung mit dem Chip herstellt und so den öffentlichen Schlüssel des EK ausliest und sich einen AK erstellen lässt. Für beide Funktionalitäten kann auf das Projekt "go-attestation" [@go-attestation] von Google zurückgegriffen werden. Der AK besitzt sogenannte Attestation Parameter, die später vom Server verwendet werden können. Diese Informationen werden nun an den Server gesendet, dazu wird der Wert des "Identifier" mit dem "type":"ek" und "value":"[ek+ak]" gesetzt. Der Body des Get-Order-Requests, der an den Server gesendet wird, sieht so aus:
+Nachdem der Client registriert ist, kann dieser ein neues Zertifikat anfragen. Dazu soll die neu definierte EK-Challenge verwendet werden, wofür der Client eine Verbindung mit dem Chip herstellt und so den öffentlichen Schlüssel des EK ausliest und sich einen AK erstellen lässt. Für beide Funktionalitäten kann auf das Projekt "go-attestation" [@go-attestation] von "Google" zurückgegriffen werden. Der AK besitzt sogenannte Attestation Parameter, die später vom Server verwendet werden können. Diese Informationen werden nun an den Server gesendet, dazu wird der Wert des "identifier" mit dem "type":"ek" und "value":"[ek+ak]" gesetzt. Der Body des Get-Order-Requests, der an den Server gesendet wird, sieht so aus:
 ```json
 {
 	"status": "pending",
@@ -104,7 +104,7 @@ Nachdem der Client registriert ist, kann dieser ein neues Zertifikat anfragen. D
 *Listing 4.2.2.1: Server Antwort auf Challenge Anfrage*
 
 
-Um mit dem neuen "Identifier" etwas anfangen zu können, muss der Server um den Identifier sowie die neue "ek-01"-Challenge erweitert werden. Das folgende Codebeispiel soll dabei beispielhaft für die gesamte Implementierung der neuen "Identifier" gelten:
+Um mit dem neuen "identifier" etwas anfangen zu können, muss der Server um den Identifier sowie die neue "ek-01"-Challenge erweitert werden. Das folgende Codebeispiel soll dabei beispielhaft für die gesamte Implementierung der neuen "identifier" gelten:
 
 ```go
 const (
@@ -149,13 +149,11 @@ if err != nil {
 ```
 *Listing 4.2.2.2: Geheimnis (secret) Erstellung, wfe.go*
 
-In dem vorangegangen Codebeispiel wird die Generierung des Geheimnisses auf der Serverseite dargestellt. Das "b" vor public, createData, CreateAttestation und CreateSignature, die jeweils aus dem AK extrahiert wurden, gibt dabei an, dass es sich um byte-Werte handelt. Das so erstellte Geheimnis kann der Client mithilfe eines POST-as-GET-Request abfragen. Der Client muss nun nur noch die Challenge mit dem in "go-attestation" beschriebenen Verfahren lösen.
+In dem vorangegangen Codebeispiel wird die Generierung des Geheimnisses auf der Serverseite dargestellt. Das "b" vor "public", "createData", "CreateAttestation" und "CreateSignature", die jeweils aus dem AK extrahiert wurden, gibt dabei an, dass es sich um byte-Werte handelt. Das so erstellte Geheimnis kann der Client mithilfe eines POST-as-GET-Request abfragen. Der Client muss nun nur noch die Challenge mit dem in "go-attestation" beschriebenen Verfahren lösen.
 
 #### Challenge erfüllen
 Im Gegensatz zur HTTP- oder DNS-Challenge, in denen der Client den Server nun aktiv werden lassen würde, muss hier der Client selbst das entschlüsselte Geheimnis an den Server senden. Dieser prüft nun, ob der Wert des gelösten Geheimnisses dem erwarteten Wert entspricht, und entscheidet so, ob die Challenge erfolgreich erfüllt wurde oder nicht. Dieser Prozess der Überprüfung, sowie das Aktualisieren des Status der Challenge kann einige Minuten dauern. Deshalb wird hier ein einfacher Polling-Mechanismus verwendet. Dazu wird ein den Status abfragender Request im Zwei-Sekunden-Takt so lange an den Server gesendet, bis dieser den Status der Challenge geändert hat.
-<!-- TODO: Bild einfügen -->
 
 #### CSR und Zertifikat
 Da der private Schlüssel den Chip nicht verlassen darf, ist es notwendig, dass der CSR über den TPM-Chip generiert wird. Informationen wie der Name oder die Mailadresse sind natürlich selbst ausfüllbar. Ein Request wird nun mitsamt der CSR an den Server gesendet, wobei der Server überprüft, ob der Wert des im CSR beschriebenen öffentlichen Schlüssels mit dem des AK übereinstimmt. Ist das der Fall, so stellt der Server das Zertifikat aus. Der Client kann es sich nun per POST-as-GET-Request abholen.
 Das Einzige, was der Client jetzt noch zu erledigen hat, ist das Zertifikat für den Benutzer des Client-Systems auf dem TPM-Chip zur Verfügung zu stellen.
-<!-- TODO: Auch hier Bild einfügen -->
