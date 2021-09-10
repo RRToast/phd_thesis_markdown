@@ -16,6 +16,7 @@ München, \datum
 
 \vspace*{1.0cm}
 
+![](source/figures/Unterschrift.png)
 \dotfill
 
 Unterschrift
