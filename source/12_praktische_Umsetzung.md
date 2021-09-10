@@ -9,14 +9,14 @@ Wie in Abbildung \ref{clientServer} verdeutlicht werden soll, handelt es sich be
 ### Einrichtung des ACME-Client
 Für die Einrichtung des ACME-Client müssen zwei Voraussetzungen erfüllt sein: Erstens, dass der Client auf einem Linux-System läuft, wobei gleichgültig ist, welche Linux-Distribution verwendet wird, zweitens die korrekte Installation des TPM-Chips. Hierbei gibt es zwei Möglichkeiten, wie der Chip installiert werden kann. So ist es möglich, den Chip an dem jeweiligen Gerät entsprechend der Anleitung physisch zu befestigen und einzurichten. Der Chip kann aber auch auf dem Client-Gerät simuliert werden. Welche Simulation dabei verwendet wird, ist dem Architekten des Systems überlassen. Es muss jedoch beachtet werden, dass die Sicherheit, wie sie in den vorangegangen Kapiteln beschrieben wurde, nur durch den physischen Chip garantiert werden kann. Da der Chip immer nur eine Kommunikation gleichzeitig erlaubt, muss sichergestellt werden, dass kein anderes Programm gerade mit diesem kommuniziert und eine Kommunikation auf diese Weise blockiert. Ein einfacher Test in Linux sieht folgendermaßen aus:
 
-\begin{lstlisting}[caption={Schnellcheck für die TPM Erreichbarkeit}, captionpos=b]
+\begin{lstlisting}[caption={Schnellcheck für die TPM-Erreichbarkeit}, captionpos=b]
 $ sudo cat /dev/tpm0
 \end{lstlisting}
 
 Erhält man auf diese Anfrage die Antwort "resource is busy", wird der TPM-Chip durch einen anderen Prozess blockiert. In der hier beschrieben praktischen Umsetzung wurde ein physischer TPM-Chip und keine Emulation oder Simulation verwendet.
 
 ### Aufsetzen des ACME-Servers
-Für diese Arbeit wurde sich bereits existierender Software bedient. "Pebble" ist ein ACME-Server, der von "letsencrypt" zur Verfügung gestellt wird[@pebble]. Dabei handelt es sich um eine vereinfachte Version, die für Testzwecke, aber nicht auf live-Systemen verwendet werden sollte. Diese stellt alle grundlegenden Funktionen, die für die folgenden Schritte benötigt werden, zur Verfügung. Einzig ein persistenter Datenspeicher muss hierfür erstellt werden. Da es sich um ein Proof-of-Concept handelt, wurden die EK-Werte, gegen die getestet werden soll, statt in einer realen Datenbank in GO-Programmen hartkodiert, wie im folgenden Listing zu sehen ist. Wichtig ist nur, dass die Werte persistent gespeichert sind und der Server diese abfragen kann.
+Für diese Arbeit wurde sich bereits existierender Software bedient. "Pebble" ist ein ACME-Server, der von "letsencrypt" zur Verfügung gestellt wird[@pebble]. Dabei handelt es sich um eine vereinfachte Version, die für Testzwecke, aber nicht auf live-Systemen verwendet werden sollte. Diese stellt alle grundlegenden Funktionen, die für die folgenden Schritte benötigt werden, zur Verfügung. Einzig ein persistenter Datenspeicher muss hierfür erstellt werden. Da es sich um ein Proof-of-Concept handelt, wurden die EK-Werte, gegen die getestet werden soll, statt in einer realen Datenbank in GO-Programmen hartkodiert, wie im folgenden Listing zu sehen ist. Wichtig ist nur, dass die Werte persistent gespeichert sind und der Server diese abfragen kann. Die Datei "wfe.go" stammt von "Pebble" und wurde für das eigene Projekt erweitert[@ACMEserver].
 
 \begin{lstlisting}[caption={EK öffentlicher Schlüssel, wfe.go}, captionpos=b]
 const pubPEM = `
@@ -32,12 +32,12 @@ mQIDAQAB
 \end{lstlisting}
 
 ## Implementierung
-Das Projekt wurde sowohl server- wie auch clientseitig in der Programmiersprache "GO" geschrieben. Als Server wurde der eigene Rechner verwendet, der Client lief auf einem Raspberry PI, der Code für beide wurde vorrangig auf dem Rechner geschrieben. Die IP-Adressen sind beispielhafte Werte, die nur dazu dienen um aufzuzeigen, wie die Kommunikation zum ACME-Server ermöglicht wird und, darauf aufbauend, wie die neue EK-Challenge implementiert und verwendet werden kann. Die verwendeten Bilder sollen dabei als visuelle Stütze dienen und sind nicht ausreichend, um das Projekt nachzubauen.
+Das Projekt wurde sowohl server- wie auch clientseitig in der Programmiersprache "GO" geschrieben. Als Server wurde der eigene Rechner verwendet, der Client lief auf einem Raspberry PI, der Code für beide wurde vorrangig auf dem Rechner geschrieben. Die IP-Adressen sind beispielhafte Werte, die nur dazu dienen um aufzuzeigen, wie die Kommunikation zum ACME-Server ermöglicht wird und, darauf aufbauend, wie die neue EK-Challenge implementiert und verwendet werden kann. Die verwendeten Listings sollen dabei als visuelle Stütze dienen und sind nicht ausreichend, um das Projekt nachzubauen. Bei den Dateien "wfe.go" und "common.go" handelt es sich um Erweiterungen des "Pebble" Projekts, also des ACME-Servers[@ACMEserver]. "encryption.go" stellt das funktionale Rückgrat des Clients dar[@ACMEclient].
 
 ### Implementierung des regulären ACME-Ablaufs
 Wie bereits in den Grundlagen beschrieben, bedient sich die Kommunikation zwischen dem Client und dem Server Replay-Noncen sowie JWS. Um die Replay-Nonce zu erhalten, reicht es, einen HEAD-Request an die von "Pebble" für diesen Zweck bereitgestellte Schnittstelle zu senden. Der Aufbau dieser Methode ist unabhängig von der Art der Challenge und gilt somit für EK genauso wie für DNS und HTTP und wird im folgenden Listing beschrieben.
 
-\begin{lstlisting}[caption={clientseitige Beschaffung der Noncen, encryption.go}, captionpos=b]
+\begin{lstlisting}[caption={Clientseitige Beschaffung der Noncen, encryption.go}, captionpos=b]
 func (n dummyNonceSource) Nonce() (string, error) {
 	if globNonce != "" {
 		return globNonce, nil
@@ -72,15 +72,15 @@ if err != nil {
 }
 \end{lstlisting}
 
-Nur in diesem Request, das im Listing "Anfrage zum erstellen eines neuen Kontos" beschrieben wird, wird der öffentliche Schlüssel verschickt. Im späteren Verlauf, sobald das Konto erstellt wurde, wird anstelle von "jwk" die "kid", die vom Server mitgeteilt wurde, verwendet. Durch diesen Request ist der Server nicht nur in der Lage, ein neues Konto zu erstellen, sondern kann auch den entsprechenden öffentlichen Schlüssel diesem Konto zuordnen. Da alle Nachrichten als POST-Request verschickt werden, kann durch die Signatur geprüft werden, ob es sich dabei um den gleichen Absender handelt wie bei vorangegangen Nachrichten.
+Nur in diesem Request, das im Listing "Anfrage zum Erstellen eines neuen Kontos" beschrieben wird, wird der öffentliche Schlüssel verschickt. Im späteren Verlauf, sobald das Konto erstellt wurde, wird anstelle von "jwk" die "kid", die vom Server mitgeteilt wurde, verwendet. Durch diesen Request ist der Server nicht nur in der Lage, ein neues Konto zu erstellen, sondern kann auch den entsprechenden öffentlichen Schlüssel diesem Konto zuordnen. Da alle Nachrichten als POST-Request verschickt werden, kann durch die Signatur geprüft werden, ob es sich dabei um den gleichen Absender handelt wie bei vorangegangen Nachrichten.
 
 ### Erweiterung des ACME-Protokolls um die neue Challenge
 Die neue Challenge umfasst wie die anderen Challenges auch drei Schritte. Erst muss eine Order beim Server aufgegeben werden, dann muss die Challenge aktiviert und anschließend erfüllt werden. Dieser Prozess, zusammen mit dem Anfragen und Verwenden des Zertifikates, soll in diesem Unterkapitel beschrieben werden. Die Idee hinter jeder Änderung bezieht sich dabei auf den im theoretischen Teil beschriebenen Ablauf.
 
 #### Order platzieren
-Nachdem der Client registriert ist, kann dieser ein neues Zertifikat anfragen. Dazu soll die neu definierte EK-Challenge verwendet werden, wofür der Client eine Verbindung mit dem Chip herstellt und so den öffentlichen Schlüssel des EK ausliest und sich einen AK erstellen lässt. Für beide Funktionalitäten kann auf das Projekt "go-attestation" [@go-attestation] von "Google" zurückgegriffen werden. Der AK besitzt sogenannte Attestation Parameter, die später vom Server verwendet werden können. Diese Informationen werden nun an den Server gesendet. Dazu wird der Wert des "identifier" mit dem "type":"ek" und "value":"[ek+ak]" gesetzt. Der Body des Get-Order-Requests, der an den Server gesendet wird, sieht so aus:
+Nachdem der Client registriert ist, kann dieser ein neues Zertifikat anfragen. Dazu soll die neu definierte EK-Challenge verwendet werden, wofür der Client eine Verbindung mit dem Chip herstellt und so den öffentlichen Schlüssel des EK ausliest und sich einen AK erstellen lässt. Für beide Funktionalitäten kann auf das Projekt "go-attestation" [@go-attestation] von "Google" zurückgegriffen werden. Der AK besitzt sogenannte "Attestation Parameter", die später vom Server verwendet werden können. Diese Informationen werden nun an den Server gesendet. Dazu wird der Wert des "identifier" mit dem "type":"ek" und "value":"[ek+ak]" gesetzt. Der Body des Get-Order-Requests, der an den Server gesendet wird, sieht so aus:
 
-\begin{lstlisting}[caption={Server Antwort auf Challenge Anfrage}, captionpos=b]
+\begin{lstlisting}[caption={Server-Antwort auf Challenge-Anfrage}, captionpos=b]
 {
 	"status": "pending",
 	"expires": "2021-08-24T13:32:22Z",
@@ -106,7 +106,7 @@ Nachdem der Client registriert ist, kann dieser ein neues Zertifikat anfragen. D
 
 Um mit dem neuen "identifier" etwas anfangen zu können, muss der Server um den Identifier sowie die neue "ek-01"-Challenge erweitert werden. Das folgende Codebeispiel soll dabei beispielhaft für die gesamte Implementierung der neuen "identifier" gelten:
 
-\begin{lstlisting}[caption={Serverseitiger Eintrag der neuen Identifier}, captionpos=b]
+\begin{lstlisting}[caption={Serverseitiger Eintrag der neuen Identifier, common.go}, captionpos=b]
 const (
 	[...]
 
