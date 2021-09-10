@@ -43,7 +43,7 @@ POST-as-GET request to retreive Certificate
 ## Ergebnisse
 Der Output beschreibt den Ablauf des ACME-Protokolls, erweitert um die "ek"-Challenge. Am Ende dieser Kommunikation befindet sich im TPM-Chip das Zertifikat, das für einen Benutzer des Client-Geräts zugänglich gespeichert wurde, sowie dessen privater Schlüssel, der für den Nutzer unzugänglich gespeichert wurde. Da als Betriebssystem für den Pi Linux verwendet wurde, ist das Ziel dieser Bachelorarbeit, das Verteilen von X.509-Zertifikaten auf Linux-basierten Endbenutzersystemen, damit erfüllt.
 
-## Vergleich der EK- mit der DNS- und HTTP-Challenge
+## Vergleich der EK-, DNS- und HTTP-Challenge
 Um die Challenge-Typen vergleichen zu können, wird wiederholt, was die jeweiligen Challenges ausmacht, bevor sie auf Gemeinsamkeiten und Unterschiede geprüft werden.
 
 Bei der HTTP- sowie der DNS-Challenge stellt der Server einen Token zur Verfügung, der die jeweiligen Challenges genau definiert. Diesen Token wandelt der Client, zusammen mit seinem Account Key, in einen Autorisierungsschlüssel um. Bei der DNS-Challenge wird zusätzlich noch mit dem SHA-256-Verfahren ein Hashwert gebildet. Anschließend werden die entsprechenden Werte base64-kodiert und als HTTP-Ressource beziehungsweise als "TXT Resource Record" zur Verfügung gestellt. Der Client sendet nun einen Request an den Server, um diesen wissen zu lassen, dass die Ressource nun für ihn zur Verfügung steht. Der Server fragt diese Information ab. Stimmt der Account Key mit dem vom Server generierten Wert überein, wurde die Challenge erfüllt.
