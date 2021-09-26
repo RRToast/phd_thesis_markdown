@@ -4,7 +4,7 @@
 -->
 \newcommand{\titel}{Sichere Verteilung von X.509-Zertifikaten auf Linux-basierten Endbenutzersystemen}
 \newcommand{\titelEN}{Secure X.509 certificate deployment on Linux-based user clients}
-\newcommand{\datum}{01.03.2018}
+\newcommand{\datum}{10.09.2021}
 
 \newcommand{\aVorname}{Richard}
 \newcommand{\aNachname}{Reik}

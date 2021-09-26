@@ -9,7 +9,7 @@ Ein ähnliches Verfahren wie das unter der Verwendung des TPM-Chips wurde für A
 Durch diese Arbeit ist es nun – wie in der Evaluation bewiesen werden konnte – möglich, ein Endbenutzersystem eindeutig zu identifizieren.
 
 ## Future Work
-Der nächste Schritt dieser Arbeit besteht darin, für das RFC8555 eine Erweiterung zu schreiben. Dieses Dokument würde nach einigen Korrekturen und Überarbeitungen eine Erweiterung für das klassische ACME-Protokoll darstellen, wie auch die IP und Telefonnummern Erweiterungen darstellen.
+Der nächste Schritt dieser Arbeit besteht darin, für das RFC8555 eine Erweiterung zu schreiben. Dieses Dokument kann nach einigen Korrekturen und Überarbeitungen eine Erweiterung für das klassische ACME-Protokoll darstellen, wie auch die IP und Telefonnummern Erweiterungen für ACME sind.
 
 Ist diese Erweiterung ein fester Bestandteil des ACME-Protokolls, kann darauf aufgebaut werden. Eine beispielhafte Verwendung dieses Verfahrens könnte sein: Möchte eine größere Firma sicherstellen, dass alle Geräte, mit denen kommuniziert wird, über ein eigenes Zertifikat verfügen, so kann die Kommunikation auf der Prämisse aufbauen, dass sich, nachdem ein Zertifikat angefragt wurde, im TPM-Chip ein solches befindet. Diese Zertifikate können verwendet werden, damit alle Kommunikationspartner stets wissen, mit wem sie gerade Informationen austauschen. Der ACME-Server fungiert dann auch gleichzeitig als Anfragemöglichkeit für jeden Gesprächspartner, der das Zertifikat des jeweils anderen Gesprächspartners prüfen möchte.
 Weiterführend wäre es auch sinnvoll, dieses Projekt statt in die abgeschwächte Version eines ACME-Servers (Pebble) in einen vollwertigen ACME-Server (zum Beispiel Boulder) zu implementieren.
